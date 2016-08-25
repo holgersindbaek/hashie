@@ -114,7 +114,7 @@ module Hashie
     # Retrieve a value from the Dash (will return the
     # property's default value if it hasn't been set).
     def [](property)
-      assert_property_exists! property
+      # return unless self.class.property?(property)
       value = super(property)
       # If the value is a lambda, proc, or whatever answers to call, eval the thing!
       if value.is_a? Proc
@@ -128,6 +128,7 @@ module Hashie
     # Set a value on the Dash in a Hash-like way. Only works
     # on pre-existing properties.
     def []=(property, value)
+      # return unless self.class.property?(property)
       assert_property_required! property, value
       assert_property_exists! property
       super(property, value)
@@ -199,6 +200,7 @@ module Hashie
     end
 
     def fail_no_property_error!(property)
+      return false
       fail NoMethodError, "The property '#{property}' is not defined for #{self.class.name}."
     end
 
